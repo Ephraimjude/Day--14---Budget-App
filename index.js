@@ -57,56 +57,30 @@ const modifyElement = (element, edit = false) => {
     parentDiv.remove();
 };
 
-// Update the createButton function
-const createButton = (iconClass, buttonClass, clickHandler, isChecked) => {
-    let button = document.createElement("button");
-    button.classList.add("fa-solid", iconClass, buttonClass);
-    button.style.fontSize = "1.2em";
-    
-    // Apply common styling for the buttons
-    button.classList.add("edit-delete-button");
+// Create list function
 
-    button.addEventListener("click", clickHandler);
-
-    // Add check for the check button
-    if (isChecked) {
-        button.classList.add("checked");
-    }
-    return button;
-};
-
-// Update the listCreator function
 const listCreator = (expenseName, expenseValue) => {
     let subListContent = document.createElement("div");
     subListContent.classList.add("sublist-content", "flex-space");
     list.appendChild(subListContent);
     subListContent.innerHTML = `<p class="product">${expenseName}</p><p class="amount">${expenseValue}</p>`;
-
-    let editButton = createButton("fa-pen-to-square", "edit", () => {
+    let editButton = document.createElement("button");
+    editButton.classList.add("fa-solid", "fa-pen-to-square", "edit");
+    editButton.style.fontSize = "1.2em";
+    editButton.addEventListener("click", () => {
         modifyElement(editButton, true);
     });
-
-    let deleteButton = createButton("fa-trash-can", "delete", () => {
+    //delete button in the expenses list
+    let deleteButton = document.createElement("button");
+    deleteButton.classList.add("fa-solid", "fa-trash-can", "delete");
+    deleteButton.style.fontSize = "1.2em";
+    deleteButton.addEventListener("click", () => {
         modifyElement(deleteButton);
     });
 
-    let checkInputBtn = createButton("fa-check-square", "check", () => {
-        if (checkInputBtn.classList.contains("checked")) {
-            console.log("Expense unchecked:", expenseName);
-            checkInputBtn.classList.remove("checked");
-            tempAmount += parseInt(expenseValue);
-            balanceValue.innerText = tempAmount - expenditureValue.innerText;
-        } else {
-            console.log("Expense checked:", expenseName);
-            checkInputBtn.classList.add("checked");
-            tempAmount -= parseInt(expenseValue);
-            balanceValue.innerText = tempAmount - expenditureValue.innerText;
-        }
-    }, false);
 
     subListContent.appendChild(editButton);
     subListContent.appendChild(deleteButton);
-    subListContent.appendChild(checkInputBtn);
     document.getElementById("list").appendChild(subListContent);
 };
 
